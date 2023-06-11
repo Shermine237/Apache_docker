@@ -1,13 +1,13 @@
 FROM alpine:3.18
 
-LABEL version='1.0.2' arch='x86-64'
+LABEL version='1.0.3' arch='x86-64'
 # Copy entrypoint.sh file to root image's folder (/)
 COPY ./entrypoint.sh /
 # Give exec permission to /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 # Argument
-ARG USER
-ARG PASSWORD
+ARG USER user
+ARG PASSWORD user
 # Set environment variable
 ENV USER_NAME $USER
 ENV USER_PASSWORD $PASSWORD
