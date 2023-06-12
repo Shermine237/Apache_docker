@@ -9,8 +9,8 @@ RUN chmod +x /entrypoint.sh
 ARG NAME=user
 ARG PASSWORD=user
 # Set environment variable
-ENV USER_NAME $NAME
-ENV USER_PASSWORD $PASSWORD
+ENV USER_NAME=$NAME
+ENV USER_PASSWORD=$PASSWORD
 # Create user
 RUN adduser -D $USER_NAME && echo $USER_NAME:$USER_PASSWORD | chpasswd
 # Install doas
