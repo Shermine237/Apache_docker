@@ -1,6 +1,6 @@
 FROM alpine:3.18
 
-LABEL version='1.0.9' arch='x86-64'
+LABEL version='1.0.10' arch='x86-64'
 # Copy entrypoint.sh file to root image's folder (/)
 COPY ./entrypoint.sh /
 # Give exec permission to /entrypoint.sh
@@ -19,6 +19,8 @@ RUN apk add --no-cache doas && echo "permit $USER_NAME as root" > /etc/doas.d/do
 RUN echo "permit nopass $USER_NAME as root cmd httpd" >> /etc/doas.d/doas.conf
 # Install apache
 RUN apk add --no-cache apache2
+# Configure apache2
+RUN echo ServerName localhost >> /etc/apache2/apache2.conf
 # Set user
 USER $USER_NAME
 # Set entrypoint
