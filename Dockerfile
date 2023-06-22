@@ -1,6 +1,6 @@
 FROM alpine:3.18
 
-LABEL version='2.0.2' arch='x86-64'
+LABEL version='2.0.3' arch='x86-64'
 # Copy entrypoint.sh file to root image's folder (/)
 COPY ./entrypoint.sh /
 # Give exec permission to /entrypoint.sh
@@ -12,15 +12,15 @@ ARG PASSWORD=user
 ENV USER_NAME=$NAME
 ENV USER_PASSWORD=$PASSWORD
 # Create user
-RUN adduser -D $USER_NAME && echo $USER_NAME:$USER_PASSWORD | chpasswd
+RUN adduser -D $USER_NAME && echo $USER_NAME:$USER_PASSWORD | chpasswd; \
 # Install doas
-RUN apk add --no-cache doas && echo "permit $USER_NAME as root" > /etc/doas.d/doas.conf
+    apk add --no-cache doas && echo "permit $USER_NAME as root" > /etc/doas.d/doas.conf; \
 # Permit user to run the folowing command as root without password
-RUN echo "permit nopass $USER_NAME as root cmd httpd" >> /etc/doas.d/doas.conf
+    echo "permit nopass $USER_NAME as root cmd httpd" >> /etc/doas.d/doas.conf; \
 # Install apache
-RUN apk add --no-cache apache2
+    apk add --no-cache apache2; \
 # Configure apache2
-RUN echo ServerName myodoo.local >> /etc/apache2/apache2.conf
+    echo ServerName myodoo.local >> /etc/apache2/apache2.conf
 # Set user
 USER $USER_NAME
 # Set entrypoint
